@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="run2" name="kp">
+	
+	<target name="compile">
+		<!--<delete dir="build"></delete>-->
+		<mkdir dir="build/classes"/>
+		<javac srcdir="src" destdir="build/classes"/>
+	</target>
+	
+	<target name="jar1" depends="compile">
+	    <mkdir dir="build/jar"/>
+	    <jar destfile="build/jar/server.jar" basedir="build/classes">
+	    <manifest>
+	    	<attribute name="Main-Class" value="dev.vyaly.ServerSide"/>
+	    </manifest>
+	    </jar>
+	</target>
+	
+	<target name="jar2" depends="jar1">
+		 <jar destfile="build/jar/client.jar" basedir="build/classes">
+		 <manifest>
+		 	<attribute name="Main-Class" value="dev.vyaly.ClientSide"/>
+		 </manifest>
+		 </jar>
+	</target>
+	
+	<target name="run" depends="jar2">
+		<java jar="build/jar/server.jar" fork="true"/>
+	</target>
+	
+	<target name="run2" depends="run">
+		<java jar="build/jar/client.jar" fork="true"/>
+	</target>
+</project>	
